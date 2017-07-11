@@ -96,6 +96,25 @@ int Push(SqStack *S,SElemType e)
   return OK;
 }
 
+/******************************************************
+Description  :check Stack is Empty
+Input        :SqStack *S
+OutPut       :None
+Return Value :OK/ERROR(0/-1)
+Calls        :
+Call By      :
+******************************************************/
+int IsEmpty(SqStack *S)
+{
+  if(S->top == S->base)
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
 
 /******************************************************
 Description  :Pop a Element From The Stack
@@ -151,6 +170,61 @@ void Convert(int value)
 }
 
 
+/******************************************************
+Description  :Check ()[]{}if match
+Input        :char *pStore
+OutPut       :None
+Return Value :
+Calls        :
+Call By      :
+******************************************************/
+void MatchCheck(char * pStore)
+{
+  SqStack *pST = (SqStack *)malloc(sizeof(SqStack));
+  int Ret = 0;
+  SElemType stSlem = {0};
+  SElemType *pGetTopElem = (SElemType*)malloc(sizeof(SElemType));
+  Ret = InitStack(pST);
+  while(*pStore)
+  {
+    memset(&stSlem,0,sizeof(SElemType));
+    strcpy(stSlem.cStr,pStore);
+    switch(*pStore)
+    {
+      case '(':
+      case '[':
+      case '{':
+        Ret = Push(pST,stSlem);
+        pStore++;
+        break;
+      case ')':
+      case ']':
+      case '}':
+        Ret = Pop(pST,&pGetTopElem);
+        if((*pGetTopElem->cStr=='(' && *pStore==')')||(*pGetTopElem->cStr=='[' && *pStore==']') || (*pGetTopElem->cStr=='{' && *pStore=='}'))
+        {
+          pStore++;
+        }
+        else
+        {
+          printf("Not Match\n");
+          return;
+        }
+        break;
+      default:
+        pStore++;
+        break;
+    }
+  }
+  if(IsEmpty(pST))
+  {
+    printf("Match\n");
+  }
+  else
+  {
+    printf("Not Match\n");
+  }
+}
 
 
 int main()
@@ -164,9 +238,9 @@ int main()
   char strDemo[] = "Hello  BAT";
   int  Ret       = 0;
   int  index     = 0;
-
+  char Store[] = "[(){}]";
   Ret = InitStack(pST);
-
+  
   for(index=0;index<STACK_INIT_SIZE;index++)
   {
     stElem.value = index;
@@ -178,10 +252,13 @@ int main()
   {
     printf("Stack pop %s and %d \n",getTopElem->cStr,getTopElem->value);
   }
-*/
+
   Convert(1348);
-  
+*/
+
+ MatchCheck(Store);
 }
+
 
 
 
