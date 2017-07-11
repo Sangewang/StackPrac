@@ -9,7 +9,7 @@ Modification :
 #include <malloc.h>
 #include <string.h>
 
-#define STACK_INIT_SIZE  100
+#define STACK_INIT_SIZE  10
 #define STACKINCREMENT   10
 #define STRLEN           20
 #define OK               0
@@ -63,7 +63,7 @@ int GetTop(SqStack * S,SElemType **e)
 {
   if(S->base == S->top)
   {
-    printf("Empty Stack\n");
+    printf("\n Empty Stack\n");
     return ERROR;
   }
   *e = S->top-1;
@@ -86,7 +86,7 @@ int Push(SqStack *S,SElemType e)
     S->base = (SElemType *)realloc(S->base,(S->stacksize + STACKINCREMENT)*sizeof(SElemType));
     if(!S->base)
     {
-      printf("Realloc Fail\n");
+      printf("\n Realloc Fail\n");
       return ERROR;
     }
     S->top = S->base + S->stacksize;
@@ -110,13 +110,48 @@ int Pop(SqStack *S,SElemType **e)
 {
   if(S->top == S->base)
   {
-    printf("Empty Stack\n");
+    printf("\n Empty Stack \n");
     return ERROR;
   }
   *e = --S->top;
   
   return OK;
 }
+
+/******************************************************
+Description  :Convert decimal to 8
+Input        :int value
+OutPut       :None
+Return Value :
+Calls        :
+Call By      :
+******************************************************/
+void Convert(int value)
+{
+  SqStack *pST = (SqStack *)malloc(sizeof(SqStack));
+  SElemType stSlem = {0};
+  SElemType *pGetTopElem = (SElemType *)malloc(sizeof(SElemType));
+  int Ret = InitStack(pST);
+  int Mod = 0;
+
+  printf("%d is convert to 8 is ",value);
+  
+  while(value)
+  {
+    Mod = value % 8;
+    stSlem.value = Mod;
+    Push(pST,stSlem);
+    value /=8;
+  }
+  while(!Pop(pST,&pGetTopElem))
+  {
+    printf("%d ",pGetTopElem->value);
+  }
+  printf("\n");
+}
+
+
+
 
 int main()
 {
@@ -138,14 +173,14 @@ int main()
     strcpy(stElem.cStr,strDemo);
     Ret = Push(pST,stElem);
   }
-
+/*
   while(!Pop(pST,&getTopElem))
   {
     printf("Stack pop %s and %d \n",getTopElem->cStr,getTopElem->value);
   }
-
-
-
+*/
+  Convert(1348);
+  
 }
 
 
