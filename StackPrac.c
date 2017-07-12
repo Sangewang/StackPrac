@@ -138,6 +138,43 @@ int Pop(SqStack *S,SElemType **e)
 }
 
 /******************************************************
+Description  :Clear The Stack
+Input        :SqStack *S
+OutPut       :None
+Return Value :(OK/ERROR)
+Calls        :
+Call By      :
+******************************************************/
+int ClearStack(SqStack *S)
+{
+    SElemType *p;
+    while(S->top)
+    {
+       p = S->top;
+       S->top--;
+       S->stacksize--;
+       free(p); 
+    }
+    return OK;
+}
+
+/******************************************************
+Description  :Destroy The Stack
+Input        :SqStack *S
+OutPut       :None
+Return Value :
+Calls        :
+Call By      :
+******************************************************/
+void Destroy(SqStack *S)
+{
+  ClearStack(S);
+  free(S);
+  return;
+}
+
+
+/******************************************************
 Description  :Convert decimal to 8
 Input        :int value
 OutPut       :None
@@ -253,10 +290,11 @@ int main()
     printf("Stack pop %s and %d \n",getTopElem->cStr,getTopElem->value);
   }
 
-  Convert(1348);
 */
 
+  Convert(1348);
  MatchCheck(Store);
+  Destroy(pST);
 }
 
 
