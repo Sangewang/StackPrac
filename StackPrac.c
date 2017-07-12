@@ -282,17 +282,17 @@ int main()
     strcpy(stElem.cStr,strDemo);
     Ret = Push(pST,stElem);
   }
-/*
+
   while(!Pop(pST,&getTopElem))
   {
     printf("Stack pop %s and %d \n",getTopElem->cStr,getTopElem->value);
   }
+  DestroyStack(pST);
 
-*/
 
-  Convert(1348);
-  MatchCheck(Store);
-  //Destroy(pST);
+//  Convert(1348);
+//  MatchCheck(Store);
+
 }
 
 
