@@ -141,21 +141,14 @@ int Pop(SqStack *S,SElemType **e)
 Description  :Clear The Stack
 Input        :SqStack *S
 OutPut       :None
-Return Value :(OK/ERROR)
+Return Value :
 Calls        :
 Call By      :
 ******************************************************/
-int ClearStack(SqStack *S)
+void ClearStack(SqStack *S)
 {
-    SElemType *p;
-    while(S->top)
-    {
-       p = S->top;
-       S->top--;
-       S->stacksize--;
-       free(p); 
-    }
-    return OK;
+  S->top = S->base;
+  return;
 }
 
 /******************************************************
@@ -166,10 +159,13 @@ Return Value :
 Calls        :
 Call By      :
 ******************************************************/
-void Destroy(SqStack *S)
+void DestroyStack(SqStack *S)
 {
-  ClearStack(S);
-  free(S);
+  printf("Destroy The Stack \n");
+  free(S->base);
+  S->base = NULL;
+  S->top  = NULL;
+  S->stacksize = 0;
   return;
 }
 
@@ -204,6 +200,7 @@ void Convert(int value)
     printf("%d ",pGetTopElem->value);
   }
   printf("\n");
+  DestroyStack(pST);
 }
 
 
@@ -261,6 +258,7 @@ void MatchCheck(char * pStore)
   {
     printf("Not Match\n");
   }
+  DestroyStack(pST);
 }
 
 
@@ -293,8 +291,8 @@ int main()
 */
 
   Convert(1348);
- MatchCheck(Store);
-  Destroy(pST);
+  MatchCheck(Store);
+  //Destroy(pST);
 }
 
 
